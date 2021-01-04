@@ -1,0 +1,220 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- <link href="style.css" rel="stylesheet"> -->
+    <title>TODO List </title>
+  </head>         
+  <body class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">TODO</a>
+          <!-- <a style="float:right ;" href="/logout">Logout</a> -->
+          <!-- <a class="navbar-brand btn btn-danger" href="/delete">Delete</a> -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse " id="navbarSupportedContent">
+              
+        <!-- <button class="btn btn-success  d-flex"  type="submit">Add TODO List</button> -->
+   
+          </div>
+        </div>
+      </nav>
+      <a style="float:right ;" class="btn btn-danger m-2" href="/logout">Logout</a>
+    <h1 style="display:inline-block;">TODO</h1>
+
+    <button style="float:right;" class="btn btn-success d-flex m-2" data-bs-toggle="modal" data-bs-target="#exampleModal3" type="submit"> Add TODO List </button>
+    <button style="float:right;" id="reff" onClick="window.location.reload()" class="btn btn-primary m-2"> Refresh </button>
+    <form action="/search" method="post" class="d-flex m-2" style="float:right;">
+      <input type="text" placeholder="Search.." style="width:100%" name="search">
+      <button type="submit" class="btn btn-success mx-2">Search</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col"><form action="<%= url %>" method="<%= method %>" ><button type="submit" class="btn btn-info">Date <%- s %></button></form></th>
+            <th scope="col">View</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for (var i=0; i <title.length;  i++ ) { %>
+          <tr>
+            <th scope="row"><%= i+1 %></th>
+            <td><%= title[i] %></td>
+            <td><%= t[i] %></td>
+            <td><button type="button" class="btn btn-primary" onclick="myfun('<%= title[i] %>','<%= body[i] %>')" data-bs-toggle="modal" data-bs-target="#exampleModal" value="<%= id[i] %>">View</button></td>
+            <td><button type="button" class="btn btn-success" onclick="myfunction('<%= id[i] %>','<%= body[i] %>')" data-bs-toggle="modal" data-bs-target="#exampleModal2" value="<%= id[i] %>">Update</button></td>
+            <td><button type="button" class="btn btn-danger" onclick="loadDoc('<%= id[i] %>')"  value="<%= id[i] %>" data-bs-toggle="modal" data-bs-target="#exampleModal4" value="<%= id[i] %>">Delete</button></td>
+            <!-- <td><form action="/" method="post" >
+                <input type="hidden" name="id1" value="<%= id[i] %>">
+            <button type="submit" class="btn btn-danger" >Delete</button>
+        </form></td> -->
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+   
+        <!-- <br/>  <%= title[i] %> 
+        <br/>  <%= body[i] %> 
+        <br/>  <%= id[i] %>  -->
+
+        <!-- <form action="<%= url %>" method="<%= method %>" ><button type="submit" class="btn btn-info"> <%- s %></button></form> -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <h5 id='ab'></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id='mb'>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModa2Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModa2Label ab">Update</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/update" method="post" >
+            <div class="modal-body" id='mb'>
+                
+                    <input type="hidden" name="id2" id='id2'>
+                    <input type="text" class="form-control" name="id3" id='id3'>
+                
+            
+            </div>
+            <div class="modal-footer">
+              <button type="close" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- Modal -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModal3Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModal3Label ab">Add </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/add" method="post" >
+            <div class="modal-body" id='mb'>
+                
+                    <input type="text" class="form-control" name="id4" id='id4' placeholder="Title"><br>
+                    <input type="text" class="form-control" name="id5" id='id5' placeholder="Body" height="50px">
+                
+            
+            </div>
+            <div class="modal-footer">
+              <button type="close" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
+
+
+
+    
+
+      
+       
+       <!-- Modal -->
+    <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModal4Label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModal4Label ab">Delete</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          
+          <form action="/" method="post" >
+          <div class="modal-body" id='mb'>
+            Are You Really want to Delete this ?
+                  <input type="hidden" name="id7" id='id7'>
+                  <!-- <input type="text" class="form-control" name="id3" id='id3'> -->
+              
+          
+          </div>
+          <div class="modal-footer">
+            <button type="close" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </div>
+      </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+    <script>
+    //    var btn = document.getElementById('edit-btn');
+    //    btn.onclick = 
+       function myfun(title,body) {
+        var txt = document.getElementById('mb');
+            txt.innerHTML = body;
+        var tx = document.getElementById('ab');
+            tx.innerHTML = title;
+       }
+
+       function myfunction(data,da) {
+        var txt = document.getElementById('id3');
+            txt.setAttribute('value',da);
+        var tx = document.getElementById('id2');
+            tx.setAttribute('value',data);
+       }
+
+       function loadDoc(da) {
+        var txt = document.getElementById('id7');
+            txt.setAttribute('value',da);
+      }
+
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+# promise
+# async await
